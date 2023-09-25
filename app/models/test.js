@@ -1,6 +1,8 @@
 const CoreModel = require('./coreModel');
+require('dotenv').config();
 const Level = require('./level');
-const Answer = require('./answer');
+const User = require('./user');
+// const Answer = require('./answer');
 
 
 // const level = new Level({
@@ -10,14 +12,36 @@ const Answer = require('./answer');
 // console.log(level);
 // console.log(level instanceof Level);
 
-const answer = new Answer({
-    id: 1,
-    description: "string",
-    question_id: 5
-})
+// const answer = new Answer({
+//     id: 1,
+//     description: "string",
+//     question_id: 5
+// })
 
-console.log(answer); // On remarque ici que l'id n'est pas affiché
-console.log(answer.id); //On accede à l'id grace au getter
+// console.log(answer); // On remarque ici que l'id n'est pas affiché
+// console.log(answer.id); //On accede à l'id grace au getter
 // answer.id = 1234; //On modifie l'id grace au setter
 // console.log(answer.id); 
 
+async function test(){
+    // const levels = await Level.findAll();
+    // console.log(levels);
+    
+    // await User.findAll();
+    // // await User.findAll();
+    // await User.findById(1);
+    // await User.findById(3);
+
+    // Donnéed issues d'un formulaire
+    const user = {
+        firstname: 'Laurent',
+        lastname: 'oclock',
+        password: 'stringcompliquée',
+        email: 'laurent@oclock.io',
+    };
+    const user_obj = new User(user);
+
+    await user_obj.insert();
+}
+
+test();
