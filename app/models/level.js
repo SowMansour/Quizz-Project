@@ -2,6 +2,7 @@ const client = require('../database');
 const CoreModel = require('./coreModel');
 
 class Level extends CoreModel{
+    static table = 'level';
     name;
 
     constructor(obj){
@@ -12,31 +13,55 @@ class Level extends CoreModel{
         }
         this.name = obj.name;
     }
-    //Static nous permet d'ignorer le constructeur
-    static async findAll(){
-        const query = {
-            text: `SELECT * FROM level`
-        }
-        const result = await client.query(query);
+    // une méthide static permet de se passer du mot clé new, et d'appeler directement la méthode.
+    // Le constructeur n'est pas appelé
+    static async findAll() {
+        const query = 'SELECT * FROM level';
+    // static async findAll() {
+    //     const query = 'SELECT * FROM level';
 
+        const levels_array = await client.query(query);
+    //     const levels_array = await client.query(query);
+
+        // On veut retourner un tableau d'instance de notre classe
         const levels = [];
+    //     // On veut retourner un tableau d'instance de notre classe
+    //     const levels = [];
 
-        //result.rows.forEach(elem => {
-        for(let elem of result.rows){
-            levels.push(new Level(elem));
+        // Pour chaque élément sorti de la base de données,
+        // On instancie notre classe et on l'envoie dans notre tableau levels
+        for (let obj of levels_array.rows) {
+            const level = new Level(obj);
+    //     // Puyr chaque élément sortior de la base de données,
+    //     // On instancie notre classe et on l'envoie dans notre tableau levels
+    //     for (let obj of levels_array.rows) {
+    //         const level = new Level(obj);
+
+            levels.push(level);
         }
+    //         levels.push(level);
+    //     }
+
         return levels;
     }
+    //     return levels;
+    // }
 
-    static async getOneById(id) {
-        const query = {
-            text: `SELECT * FROM level WHERE id = $1;`,
-            value: [id]
-         }
-         const level_obj = await client.query(query);
-         const level = new Level (level_obj.rows[0]);
-         return level
+    static async findOneById(id) {
+        const query = 'SELECT * FROM level WHERE id = $1;';
+    // static async findOneById(id) {
+    //     const query = 'SELECT * FROM level WHERE id = $1;';
+
+        const level_obj = await client.query(query, [id]);
+    //     const level_obj = await client.query(query, [id]);
+
+        const level = new Level(level_obj.rows[0]);
+    //     const level = new Level(level_obj.rows[0]);
+
+        return level;
     }
+    //     return level;
+    // }
 }
 
 Level.findAll();

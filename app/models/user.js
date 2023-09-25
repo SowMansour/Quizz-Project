@@ -1,9 +1,11 @@
+const client = require('../database');
 const CoreModel = require('./coreModel');
 const emailValidator = require('email-validator');
 
 
 class User extends CoreModel {
-    email;
+  static table = 'user';  
+  email;
     password;
     firstname;
     lastname;
@@ -32,53 +34,94 @@ class User extends CoreModel {
 
     static async findAll() {
       const query = 'SELECT * FROM "user"';
+  // static async findAll() {
+  //     const query = 'SELECT * FROM "user"';
 
       const results = await client.query(query);
+  //     const results = await client.query(query);
 
       // const users = [];
+  //     // const users = [];
 
       // for (const obj of results.rows) {
       //     const user = new User(obj);
+  //     // for (const obj of results.rows) {
+  //     //     const user = new User(obj);
 
       //     users.push(user);
       // }
+  //     //     users.push(user);
+  //     // }
 
       /**
        * Array.map permet de créér un nouveau tableau, selon les conditions réunis dans la fonction que l'on pass en argument
        */
       const users = results.rows.map((obj) => {
           const user = new User(obj);
+  //     /**
+  //      * Array.map permet de créér un nouveau tableau, selon les conditions réunis dans la fonction que l'on pass en argument
+  //      */
+  //     const users = results.rows.map((obj) => {
+  //         const user = new User(obj);
 
           return user;
       });
+  //         return user;
+  //     });
 
       console.log(results.rows);
       console.log(users);
+  //     console.log(results.rows);
+  //     console.log(users);
 
       for (const obj of users) {
           console.log(obj.fullName());
       }
+  //     for (const obj of users) {
+  //         console.log(obj.fullName());
+  //     }
 
       return users;
   }
+  //     return users;
+  // }
 
-    static async findById(id) {
+  static async findById(id) {
+      // const query1 = 'SELECT * FROM "user" WHERE id = $1';
+  // static async findById(id) {
+  //     // const query1 = 'SELECT * FROM "user" WHERE id = $1';
+
+      // const result1 = await client.query(query, [id]);
+  //     // const result1 = await client.query(query, [id]);
+
       const query = {
           text: 'SELECT * FROM "user" WHERE id = $1',
           values: [id],
       };
+  //     const query = {
+  //         text: 'SELECT * FROM "user" WHERE id = $1',
+  //         values: [id],
+  //     };
 
       const result = await client.query(query);
+  //     const result = await client.query(query);
 
       console.log(result.rows);
       console.log(result.rows[0]);
       // On souhaite retourner une instance de User
       const user = new User(result.rows[0]);
+  //     console.log(result.rows);
+  //     console.log(result.rows[0]);
+  //     // On souhaite retourner une instance de User
+  //     const user = new User(result.rows[0]);
 
       console.log(user);
+  //     console.log(user);
 
       return user;
   }
+  //     return user;
+  // }
 
   async insert() {
     // Dans cette requêtes le RETURNING * veut dire que l'on souhaite que la BDD, nous retourne une copie de ce qu'elle vient d'enregistrer

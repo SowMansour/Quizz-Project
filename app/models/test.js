@@ -33,20 +33,32 @@ async function test(){
     // await User.findById(3);
 
     // Donnéed issues d'un formulaire
-    const user = {
-        firstname: 'Marc',
-        lastname: 'oclock',
-        id: 4,
-        firstname: 'Bianca',
-        lastname: 'Bell',
-        password: 'stringcompliquée',
-        email: 'Marc@oclock.io',
-        email: 'Bianca@oclock.io',
-    };
-    const user_obj = new User(user);
+    // const user = {
+    //     firstname: 'Marc',
+    //     lastname: 'oclock',
+    //     id: 4,
+    //     firstname: 'Bianca',
+    //     lastname: 'Bell',
+    //     password: 'stringcompliquée',
+    //     email: 'Marc@oclock.io',
+    //     email: 'Bianca@oclock.io',
+    // };
+    // const user_obj = new User(user);
 
-    await user_obj.insert();
-    await user_obj.destroy();
+    // await user_obj.insert();
+    // await user_obj.destroy();
+
+    const levels = await Level.findAll();
+    console.log(levels);
+
+    const users = await User.findAll();
+    console.log(users);
+
+    const level = await Level.findById(1);
+    console.log(level);
+
+    const user = await User.findById(1);
+    console.log(user);
 
     process.exit();
 }
