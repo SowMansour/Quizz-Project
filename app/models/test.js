@@ -34,14 +34,21 @@ async function test(){
 
     // Donnéed issues d'un formulaire
     const user = {
-        firstname: 'Laurent',
+        firstname: 'Marc',
         lastname: 'oclock',
+        id: 4,
+        firstname: 'Bianca',
+        lastname: 'Bell',
         password: 'stringcompliquée',
-        email: 'laurent@oclock.io',
+        email: 'Marc@oclock.io',
+        email: 'Bianca@oclock.io',
     };
     const user_obj = new User(user);
 
     await user_obj.insert();
+    await user_obj.destroy();
+
+    process.exit();
 }
 
 test();

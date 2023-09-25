@@ -94,6 +94,43 @@ class User extends CoreModel {
     console.log(this);
 }
 
+async update() {
+  const query = {
+      text: `UPDATE "user" SET
+          "email" = $1,
+          "password" = $2,
+          "firstname" = $3,
+          "lastname" = $4
+          WHERE "id" = $5
+          RETURNING *`,
+      values: [
+          this.email,
+          this.password,
+          this.firstname,
+          this.lastname,
+          this.id,
+      ],
+  };
+
+  const result = await client.query(query);
+
+  console.log(result);
+}
+
+/**
+* Le mot clé delete existe en JS, on ne réutilise pas
+*/
+async destroy() {
+  const query = {
+      text: 'DELETE FROM "user" WHERE "id" = $1',
+      values: [this.id],
+  };
+
+  const result = await client.query(query);
+
+  console.log(result);
+}
+
 }
 
 
