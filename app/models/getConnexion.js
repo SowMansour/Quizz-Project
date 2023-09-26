@@ -2,9 +2,7 @@ const Sequelize = require('sequelize');
 
 function getConnexion() {
     const sequelize = new Sequelize(
-        process.env.DB_NAME,
-        process.env.DB_USERNAME,
-        process.env.DB_PASSWORD, 
+        process.env.PG_URL,
         {
             define: {
             createdAt: 'created_at',
