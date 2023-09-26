@@ -1,9 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const getConnexion = require('./getConnexion');
-// on extraie Model de sequelize
-// destructuring
-const { Model } = require('sequelize');
-const getConnexion = require('./getConnexion');
 
 class Answer extends Model {}
 
