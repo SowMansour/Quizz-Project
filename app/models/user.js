@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const getConnexion = require('./getConnexion');
 
 class User extends Model {
-    getFullName() {
+    get fullName() {
         return `${this.firstname} ${this.lastname}`;
     }
 }

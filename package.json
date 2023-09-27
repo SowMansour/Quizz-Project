@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "tables:import": "psql -U quizz -d quizz -f data/import_tables.sql",
+    "data:seed": "psql -U quizz -d quizz -f data/import_data.sql ",
+    "reset:db": "npm run tables:import && npm run data:seed"
   },
   "keywords": [],
   "author": "",
