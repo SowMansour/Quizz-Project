@@ -1,7 +1,7 @@
 const { Answer, Question, Level, Quiz, User, Tag } = require('../models/index');
 
 const mainController = {
-   async homePage(req, res) {
+    homePage: async (req, res) => {
         const quizzes = await Quiz.findAll({
             include: 'author'
         });
