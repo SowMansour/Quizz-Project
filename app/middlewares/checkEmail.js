@@ -5,6 +5,7 @@ const checkEmail = (req, res, next) => {
         return next();
     }
         const error = new Error('email incorrect');
+        error.status = 401;
         return next(error);
 };
 
