@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-//const session = require('express-session')
+const session = require('express-session')
 
 const router = require('./app/routers');
 
@@ -13,6 +13,22 @@ app.set('view engine', 'ejs');
 app.set('views', './app/views');
 
 app.use(express.static('assets'));
+
+app.use(session({
+   resave: true,
+   secret: process.env.SESSION_SECRET,
+   saveUninitialized: true,
+   cookie: {
+      secure: false, //it's when it's not https
+      maxAge: 1000 * 60 * 60
+   }
+}));
+
+app.use((req, res, next) => {
+//Permet de renvoyer les données de sessions aux views
+   app.locals.session = req.session;
+   next();
+})
 
 app.use(router);
 

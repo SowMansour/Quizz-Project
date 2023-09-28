@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
 const emailValidator = require('email-validator');
+const { request } = require('express');
 
 const userController = {
     signup: async (req, res) => {
@@ -51,11 +52,56 @@ const userController = {
         res.redirect('/login');
     },
 
-    login: async (req, res) => {
-        
+    login:(req, res) => {
         res.render('login')
-    
-    }
+    },
+
+    userCheckIn: async (req, res) => {
+        
+        //Rtrieve form data
+        const {email, password} = req.body;
+
+        //Validate email format
+        if(!emailValidator.validate(email)){
+        return res.render('login', {error: 'email incorrect'})
+        }
+
+        //Validate if email exist or not
+        const user = await User.findOne({
+            where: {
+                email
+            }
+        });
+        //If user doesnt exist, we throw an error
+        if(!user){
+            return res.status(400).render('login', {error: 'email not correct'});
+        }
+
+        //Compare password
+        const validePassword = await bcrypt.compare(password, user.password);
+
+        if(!validePassword){
+            return res.status(400).render('login', {error: 'password not correct'});
+
+        }
+        //Secure step: Delete password before session transmission
+        delete user.dataValues.password;
+
+        //Add User to Session
+        req.session.user = user;
+
+        res.redirect('/');
+    },
+
+    logout:(req, res) => {
+        //Détruire la session
+        req.session.user = null;
+        res.redirect('/');
+    },
+
+    getProfile:(req, res) => {
+        res.render('profile');
+    },
 }
 
 module.exports = userController;
