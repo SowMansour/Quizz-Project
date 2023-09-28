@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
-const emailValidator = require('email-validator');
-const { request } = require('express');
 
 const userController = {
     signup: async (req, res) => {

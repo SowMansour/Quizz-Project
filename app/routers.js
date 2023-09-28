@@ -8,23 +8,23 @@ const adminController= require('./controllers/adminController');
 const userMiddleware = require('./middlewares/user');
 const adminMiddleware = require('./middlewares/admin');
 const checkEmail = require('./middlewares/checkEmail');
-
+const { catchErros } = require('./middlewares/handlers/errorHandlers');
+//catchErros s'utilise seulement sur les chemins async/await
 
 const router = express.Router();
 
-router.get('/', mainController.homePage);
+router.get('/', catchErros(mainController.homePage));
+router.get('/quiz/:id', catchErros(quizController.getQuiz));
 
-router.get('/quiz/:id', quizController.getQuiz);
-
-router.get('/tags', tagsController.getTags);
-router.get('/tag/:id', tagsController.getTag);
+router.get('/tags', catchErros(tagsController.getTags));
+router.get('/tag/:id', catchErros(tagsController.getTag));
 
 router.get('/signup', userController.signup);
 //retieve form data
-router.post('/signup', checkEmail, userController.register);
+router.post('/signup', checkEmail, catchErros(userController.register));
 
 router.get('/login', userController.login);
-router.post('/login', checkEmail, userController.userCheckIn);
+router.post('/login', checkEmail, catchErros(userController.userCheckIn));
 
 router.get('/logout', userMiddleware, userController.logout);
 
