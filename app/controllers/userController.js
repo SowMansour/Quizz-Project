@@ -9,13 +9,10 @@ const userController = {
     },
 
     register: async (req, res) => {
+        // ! dfh
         //Retrieve data form
         const {lastname, firstname, email, password, passwordConfirm} = req.body;
 
-        //Validate email format
-        if(!emailValidator.validate(email)){
-            return res.render('signup', {error: 'email incorrect'})
-        }
         //Validate if email exist or not
         const user = await User.findOne({
             where: {
@@ -60,11 +57,6 @@ const userController = {
         
         //Rtrieve form data
         const {email, password} = req.body;
-
-        //Validate email format
-        if(!emailValidator.validate(email)){
-        return res.render('login', {error: 'email incorrect'})
-        }
 
         //Validate if email exist or not
         const user = await User.findOne({
