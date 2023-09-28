@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const session = require('express-session')
 
+const {errorsCollector, notFound} = require('./app/middlewares/handlers/errorHandlers');
+
 const router = require('./app/routers');
 
 // Permet de récupérer les données d'un formulaire simple
@@ -31,6 +33,10 @@ app.use((req, res, next) => {
 })
 
 app.use(router);
+
+app.use(notFound);
+
+app.use(errorsCollector);
 
 const PORT = process.env.PORT;
 const BASE_URL = process.env.BASE_URL;
