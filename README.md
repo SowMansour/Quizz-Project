@@ -1,6 +1,6 @@
 # Quizz Project
 
-## What is the goal of the Quizz Project project :thinking:
+## What is the goal of the Quizz Project :thinking:
 
 In this project, I have adopted the Model-View-Controller (MVC) architectural pattern, which enables me to effectively organize and structure my application based on different components. MVC is renowned and widely employed across various industries for its proven efficiency and maintainability.
 
